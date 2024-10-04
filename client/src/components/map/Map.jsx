@@ -12,7 +12,7 @@ function Map({ items }) {
           : [52.4797, -1.90269]
       }
       zoom={7}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
       className="map"
     >
       <TileLayer

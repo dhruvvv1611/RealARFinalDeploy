@@ -18,8 +18,8 @@ function Navbar() {
     <nav>
       <div className="left">
         <a href="/" className="logo">
-          <img src="/logo.png" alt="" />
-          <span>LamaEstate</span>
+          <img src="https://preview.redd.it/do-luffy-and-nami-have-the-best-dynamic-in-one-piece-whats-v0-xlb0jx8vdgsd1.jpeg?width=320&crop=smart&auto=webp&s=ceebb53d5973740b1fc27bd711efe8d1b780b3e5" alt="" />
+          <span>RealAr</span>
         </a>
         <a href="/">Home</a>
         <a href="/">About</a>

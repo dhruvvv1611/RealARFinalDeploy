@@ -32,6 +32,7 @@
 
       .info {
         margin-top: 50px;
+        
         .top {
           display: flex;
           justify-content: space-between;
@@ -45,6 +46,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+
             h1 {
               font-weight: 400;
             }
@@ -69,6 +71,7 @@
               font-weight: 300;
             }
           }
+          
           .user {
             display: flex;
             flex-direction: column;
@@ -92,14 +95,47 @@
             }
           }
         }
+
+        .bottom-flex {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+         
+
+          // Apply flex-direction column for smaller devices
+          @include sm {
+            flex-direction: column;
+          }
+        }
+
         .bottom {
           margin-top: 50px;
           color: #555;
           line-height: 20px;
+          z-index: -1;
+        }
+
+        .button-three-d {
+          padding: 15px 25px;
+          background-color: #fece51;
+          cursor: pointer;
+          outline: none;
+          border: none;
+          position: absolute;
+          left: 82.5%;
+          top: 45%;
+
+          // Make the button responsive
+          @include sm {
+            position: static; // Change position to static for smaller devices
+            margin-top: 20px; // Add spacing when stacked
+          }
         }
       }
     }
   }
+
   .features {
     flex: 2;
     background-color: #fcf5f3;
@@ -160,6 +196,7 @@
         background-color: white;
         border-radius: 10px;
       }
+
       .listHorizontal {
         display: flex;
         justify-content: space-between;

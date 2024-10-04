@@ -6,6 +6,7 @@ import DOMPurify from "dompurify";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import { Link } from "react-router-dom";
 
 function SinglePage() {
   const post = useLoaderData();
@@ -47,12 +48,17 @@ function SinglePage() {
                 <span>{post.user.username}</span>
               </div>
             </div>
-            <div
-              className="bottom"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(post.postDetail.desc),
-              }}
-            ></div>
+            <div className="bottom-flex">
+              <div
+                className="bottom"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(post.postDetail.desc),
+                }}
+              ></div>
+              <Link to="/list" className="button-three-d">
+                Do you have an account?
+              </Link>
+            </div>
           </div>
         </div>
       </div>
