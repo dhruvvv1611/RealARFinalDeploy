@@ -8,6 +8,7 @@ import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
+import ModelsPage from "./routes/ModelsPage/ModelsPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
 
 function App() {
@@ -30,7 +31,10 @@ function App() {
           element: <SinglePage />,
           loader: singlePageLoader,
         },
-
+        {
+          path: "/models/:id", // Add new route for ModelsPage
+          element: <ModelsPage />,
+        },
         {
           path: "/login",
           element: <Login />,
@@ -48,7 +52,7 @@ function App() {
         {
           path: "/profile",
           element: <ProfilePage />,
-          loader: profilePageLoader
+          loader: profilePageLoader,
         },
         {
           path: "/profile/update",

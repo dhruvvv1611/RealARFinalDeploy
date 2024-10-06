@@ -6,7 +6,6 @@ import DOMPurify from "dompurify";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
-import { Link } from "react-router-dom";
 
 function SinglePage() {
   const post = useLoaderData();
@@ -18,7 +17,6 @@ function SinglePage() {
     if (!currentUser) {
       navigate("/login");
     }
-    // AFTER REACT 19 UPDATE TO USEOPTIMISTIK HOOK
     setSaved((prev) => !prev);
     try {
       await apiRequest.post("/users/save", { postId: post.id });
@@ -26,6 +24,11 @@ function SinglePage() {
       console.log(err);
       setSaved((prev) => !prev);
     }
+  };
+
+  // Navigate to 3D models page
+  const handleNavigateToModels = () => {
+    navigate(`/models/${post.id}`); // Adjust the path based on your routing
   };
 
   return (
@@ -36,7 +39,13 @@ function SinglePage() {
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{post.title}</h1>
+                <h1 style={{ display: "inline-block" }}>{post.title}</h1>
+                <button
+                  onClick={handleNavigateToModels}
+                  style={{ marginLeft: "10px" }} // Add margin to separate from title
+                >
+                  View 3D Models
+                </button>
                 <div className="address">
                   <img src="/pin.png" alt="" />
                   <span>{post.address}</span>
@@ -55,9 +64,6 @@ function SinglePage() {
                   __html: DOMPurify.sanitize(post.postDetail.desc),
                 }}
               ></div>
-              <Link to="/list" className="button-three-d">
-                Do you have an account?
-              </Link>
             </div>
           </div>
         </div>

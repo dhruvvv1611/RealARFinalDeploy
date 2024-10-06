@@ -57,7 +57,9 @@ export const getPost = async (req, res) => {
             },
           });
           // Early return to prevent multiple response attempts
-          return res.status(200).json({ ...post, isSaved: saved ? true : false });
+          return res
+            .status(200)
+            .json({ ...post, isSaved: saved ? true : false });
         } else {
           return res.status(403).json({ message: "Invalid token" });
         }
@@ -75,13 +77,41 @@ export const addPost = async (req, res) => {
   const body = req.body;
   const tokenUserId = req.userId;
 
+  // Validate postData
+  const { postData, postDetail } = body;
+
+  // Check if postData includes images and models
+  if (
+    !postData.images ||
+    !Array.isArray(postData.images) ||
+    !postData.images.every((img) => typeof img === "string")
+  ) {
+    return res
+      .status(400)
+      .json({
+        message: "Invalid images format. Expected an array of strings.",
+      });
+  }
+
+  if (
+    !postData.models ||
+    !Array.isArray(postData.models) ||
+    !postData.models.every((model) => typeof model === "string")
+  ) {
+    return res
+      .status(400)
+      .json({
+        message: "Invalid models format. Expected an array of strings.",
+      });
+  }
+
   try {
     const newPost = await prisma.post.create({
       data: {
-        ...body.postData,
+        ...postData,
         userId: tokenUserId,
         postDetail: {
-          create: body.postDetail,
+          create: postDetail,
         },
       },
     });
@@ -124,3 +154,5 @@ export const deletePost = async (req, res) => {
     res.status(500).json({ message: "Failed to delete post" });
   }
 };
+
+

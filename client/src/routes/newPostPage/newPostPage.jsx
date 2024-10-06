@@ -9,9 +9,10 @@ import { useNavigate } from "react-router-dom";
 function NewPostPage() {
   const [value, setValue] = useState("");
   const [images, setImages] = useState([]);
+  const [models, setModels] = useState([]); // State for .glb models
   const [error, setError] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +32,8 @@ function NewPostPage() {
           property: inputs.property,
           latitude: inputs.latitude,
           longitude: inputs.longitude,
-          images: images,
+          images: images, // Include uploaded images
+          models: models, // Include uploaded models
         },
         postDetail: {
           desc: value,
@@ -44,10 +46,10 @@ function NewPostPage() {
           restaurant: parseInt(inputs.restaurant),
         },
       });
-      navigate("/"+res.data.id)
+      navigate("/" + res.data.id);
     } catch (err) {
       console.log(err);
-      setError(error);
+      setError("An error occurred while creating the post.");
     }
   };
 
@@ -59,15 +61,15 @@ function NewPostPage() {
           <form onSubmit={handleSubmit}>
             <div className="item">
               <label htmlFor="title">Title</label>
-              <input id="title" name="title" type="text" />
+              <input id="title" name="title" type="text" required />
             </div>
             <div className="item">
               <label htmlFor="price">Price</label>
-              <input id="price" name="price" type="number" />
+              <input id="price" name="price" type="number" required />
             </div>
             <div className="item">
               <label htmlFor="address">Address</label>
-              <input id="address" name="address" type="text" />
+              <input id="address" name="address" type="text" required />
             </div>
             <div className="item description">
               <label htmlFor="desc">Description</label>
@@ -75,27 +77,39 @@ function NewPostPage() {
             </div>
             <div className="item">
               <label htmlFor="city">City</label>
-              <input id="city" name="city" type="text" />
+              <input id="city" name="city" type="text" required />
             </div>
             <div className="item">
               <label htmlFor="bedroom">Bedroom Number</label>
-              <input min={1} id="bedroom" name="bedroom" type="number" />
+              <input
+                min={1}
+                id="bedroom"
+                name="bedroom"
+                type="number"
+                required
+              />
             </div>
             <div className="item">
               <label htmlFor="bathroom">Bathroom Number</label>
-              <input min={1} id="bathroom" name="bathroom" type="number" />
+              <input
+                min={1}
+                id="bathroom"
+                name="bathroom"
+                type="number"
+                required
+              />
             </div>
             <div className="item">
               <label htmlFor="latitude">Latitude</label>
-              <input id="latitude" name="latitude" type="text" />
+              <input id="latitude" name="latitude" type="text" required />
             </div>
             <div className="item">
               <label htmlFor="longitude">Longitude</label>
-              <input id="longitude" name="longitude" type="text" />
+              <input id="longitude" name="longitude" type="text" required />
             </div>
             <div className="item">
               <label htmlFor="type">Type</label>
-              <select name="type">
+              <select name="type" required>
                 <option value="rent" defaultChecked>
                   Rent
                 </option>
@@ -103,18 +117,17 @@ function NewPostPage() {
               </select>
             </div>
             <div className="item">
-              <label htmlFor="type">Property</label>
-              <select name="property">
+              <label htmlFor="property">Property</label>
+              <select name="property" required>
                 <option value="apartment">Apartment</option>
                 <option value="house">House</option>
                 <option value="condo">Condo</option>
                 <option value="land">Land</option>
               </select>
             </div>
-
             <div className="item">
               <label htmlFor="utilities">Utilities Policy</label>
-              <select name="utilities">
+              <select name="utilities" required>
                 <option value="owner">Owner is responsible</option>
                 <option value="tenant">Tenant is responsible</option>
                 <option value="shared">Shared</option>
@@ -122,7 +135,7 @@ function NewPostPage() {
             </div>
             <div className="item">
               <label htmlFor="pet">Pet Policy</label>
-              <select name="pet">
+              <select name="pet" required>
                 <option value="allowed">Allowed</option>
                 <option value="not-allowed">Not Allowed</option>
               </select>
@@ -134,26 +147,33 @@ function NewPostPage() {
                 name="income"
                 type="text"
                 placeholder="Income Policy"
+                required
               />
             </div>
             <div className="item">
               <label htmlFor="size">Total Size (sqft)</label>
-              <input min={0} id="size" name="size" type="number" />
+              <input min={0} id="size" name="size" type="number" required />
             </div>
             <div className="item">
               <label htmlFor="school">School</label>
-              <input min={0} id="school" name="school" type="number" />
+              <input min={0} id="school" name="school" type="number" required />
             </div>
             <div className="item">
-              <label htmlFor="bus">bus</label>
-              <input min={0} id="bus" name="bus" type="number" />
+              <label htmlFor="bus">Bus</label>
+              <input min={0} id="bus" name="bus" type="number" required />
             </div>
             <div className="item">
               <label htmlFor="restaurant">Restaurant</label>
-              <input min={0} id="restaurant" name="restaurant" type="number" />
+              <input
+                min={0}
+                id="restaurant"
+                name="restaurant"
+                type="number"
+                required
+              />
             </div>
             <button className="sendButton">Add</button>
-            {error && <span>error</span>}
+            {error && <span>{error}</span>}
           </form>
         </div>
       </div>
@@ -161,14 +181,34 @@ function NewPostPage() {
         {images.map((image, index) => (
           <img src={image} key={index} alt="" />
         ))}
+        {models.map((model, index) => (
+          <p key={index}>{model}</p> // Display the model URLs or names
+        ))}
+
+        {/* Upload Button for Images */}
         <UploadWidget
           uwConfig={{
             multiple: true,
-            cloudName: "lamadev",
+            cloudName: "dsfhv73xf",
             uploadPreset: "estate",
             folder: "posts",
+            resourceType: "image", // Specify for images
           }}
-          setState={setImages}
+          setState={setImages} // Update images state
+          buttonLabel="Upload Images" // Label for image upload button
+        />
+
+        {/* Upload Button for Models */}
+        <UploadWidget
+          uwConfig={{
+            multiple: true,
+            cloudName: "dsfhv73xf",
+            uploadPreset: "estate",
+            folder: "posts",
+            resourceType: "raw", // Specify for .glb files
+          }}
+          setState={setModels} // Update models state
+          buttonLabel="Upload Models (.glb)" // Label for model upload button
         />
       </div>
     </div>
