@@ -33,7 +33,8 @@ function UploadWidget({ uwConfig, setState, buttonLabel = "Upload" }) {
         (error, result) => {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the uploaded info: ", result.info);
-            setState(result.info.secure_url); // Set the state with the uploaded image URL
+            // Update state by appending the new URL to the existing state array
+            setState((prevState) => [...prevState, result.info.secure_url]); 
           }
         }
       );
