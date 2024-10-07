@@ -181,21 +181,7 @@ function NewPostPage() {
       </div>
 
       <div className="sideContainer">
-        {/* Display Uploaded Images */}
-        {images.map((image, index) => (
-          <img src={image} key={index} alt="" />
-        ))}
-
-        {/* Display Uploaded Models */}
-        {models.map((model, index) => (
-          <p key={index}>{model}</p> // Display the model URLs or names
-        ))}
-
-        {/* Display Uploaded Panoramic Images */}
-        {panoramicImages.map((panoramic, index) => (
-          <img src={panoramic} key={index} alt={`Panoramic ${index}`} />
-        ))}
-
+        
         {/* Upload Button for Regular Images */}
         <UploadWidget
           uwConfig={{

@@ -78,6 +78,7 @@ model User {
   email      String      @unique
   username   String      @unique
   password   String
+  phone      String      @unique
   avatar     String?
   createdAt  DateTime    @default(now())
   posts      Post[]

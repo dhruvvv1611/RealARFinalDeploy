@@ -19,12 +19,14 @@ function Register() {
     const username = formData.get("username");
     const email = formData.get("email");
     const password = formData.get("password");
+    const phone = formData.get("phone");
 
     try {
       const res = await apiRequest.post("/auth/register", {
         username,
         email,
         password,
+        phone,
       });
 
       navigate("/login");
@@ -40,7 +42,8 @@ function Register() {
         <form onSubmit={handleSubmit}>
           <h1>Create an Account</h1>
           <input name="username" type="text" placeholder="Username" />
-          <input name="email" type="text" placeholder="Email" />
+          <input name="email" type="text" placeholder="Email"/>
+          <input name="phone" type="text" placeholder="Phone" maxLength={10} minLength={10} />
           <input name="password" type="password" placeholder="Password" />
           <button disabled={isLoading}>Register</button>
           {error && <span>{error}</span>}

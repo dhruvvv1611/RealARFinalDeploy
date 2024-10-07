@@ -51,22 +51,22 @@ function SinglePage() {
             <div className="top">
               <div className="post">
                 <h1 style={{ display: "inline-block" }}>{post.title}</h1>
-                <div style={{display:"flex "}}>
+                <div className="buttonsGroup">
                   <button
+                    className="viewModelsBtn"
                     onClick={handleNavigateToModels}
-                    style={{ marginLeft: "10px" }} // Add margin to separate from title
                   >
                     View 3D Models
                   </button>
                   <button
+                    className="viewPanoramicBtn"
                     onClick={handleNavigateToPanoramic}
-                    style={{ marginLeft: "10px" }} // Add margin to separate from title
                   >
                     View 3D Images
                   </button>
                   <button
+                    className="openStreetViewBtn"
                     onClick={handleOpenStreetView}
-                    style={{ marginLeft: "10px" }} // Add margin to separate from title
                   >
                     Open Google Street View
                   </button>
@@ -79,8 +79,10 @@ function SinglePage() {
                 <div className="price">$ {post.price}</div>
               </div>
               <div className="user">
+                <span>Listed By</span>
                 <img src={post.user.avatar} alt="" />
                 <span>{post.user.username}</span>
+                <span>{post.user.phone}</span>
               </div>
             </div>
             <div className="bottom-flex">
@@ -176,20 +178,17 @@ function SinglePage() {
           <div className="mapContainer">
             <Map items={[post]} />
           </div>
-          <div className="buttons">
-            <button>
-              <img src="/chat.png" alt="" />
-              Send a Message
-            </button>
-            <button
-              onClick={handleSave}
-              style={{
-                backgroundColor: saved ? "#fece51" : "white",
-              }}
-            >
-              <img src="/save.png" alt="" />
-              {saved ? "Place Saved" : "Save the Place"}
-            </button>
+          <div className="bottomButton">
+            <div className="button">
+              <button className="chatButton ">
+                <img src="/chat.png" alt="" />
+                <p>Send a Message</p>
+              </button>
+              <button onClick={handleSave} className="saveButton ">
+                <img src="/save.png" alt="" />
+                <p>{saved ? "Place Saved" : "Save the Place"}</p>
+              </button>
+            </div>
           </div>
         </div>
       </div>

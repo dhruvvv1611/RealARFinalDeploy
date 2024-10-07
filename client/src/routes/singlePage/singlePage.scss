@@ -4,6 +4,108 @@
   display: flex;
   height: 100%;
 
+  .bottomButton {
+    display: flex;
+    margin-top: 10px;
+   
+
+    button {
+      padding: 10px;
+      margin-left: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+     
+    }
+
+    .button{
+      display: flex;
+      gap: 70px;
+      margin-left: 15px;
+
+
+      @include sm{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-left: 70px;
+
+      }
+   
+    }
+
+  
+    .chatButton{
+      background-color: #ffe6e6;
+      color: #cc0000;
+      display: flex;
+      gap: 10px;
+      
+      
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+
+    .saveButton{
+      background-color: #dff0ff;
+      color: #0056b3;
+      display: flex;
+      gap: 10px;
+     
+
+      &:hover {
+        background-color: #cce0ff;
+      }
+      
+     
+    }
+  }
+
+
+  .buttonsGroup {
+    display: flex;
+    margin-top: 10px;
+
+    button {
+      padding: 10px;
+      margin-left: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .viewModelsBtn {
+      background-color: #f0f0f0;
+      color: #333;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+
+    .viewPanoramicBtn {
+      background-color: #dff0ff;
+      color: #0056b3;
+
+      &:hover {
+        background-color: #cce0ff;
+      }
+    }
+
+    .openStreetViewBtn {
+      background-color: #ffe6e6;
+      color: #cc0000;
+
+      &:hover {
+        background-color: #ffcccc;
+      }
+    }
+  }
+
   @include md {
     flex-direction: column;
     overflow: scroll;
@@ -32,7 +134,7 @@
 
       .info {
         margin-top: 50px;
-        
+
         .top {
           display: flex;
           justify-content: space-between;
@@ -49,6 +151,7 @@
 
             h1 {
               font-weight: 400;
+              line-height: 1.5; // Added line height for readability
             }
             .address {
               display: flex;
@@ -71,17 +174,18 @@
               font-weight: 300;
             }
           }
-          
+
           .user {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             padding: 0px 50px;
             border-radius: 10px;
             background-color: rgba(254, 205, 81, 0.209);
             font-weight: 600;
+            position: relative;
 
             @include sm {
               padding: 20px 50px;
@@ -101,9 +205,7 @@
           justify-content: space-between;
           align-items: center;
           position: relative;
-         
 
-          // Apply flex-direction column for smaller devices
           @include sm {
             flex-direction: column;
           }
@@ -115,23 +217,6 @@
           line-height: 20px;
           z-index: -1;
         }
-
-        .button-three-d {
-          padding: 15px 25px;
-          background-color: #fece51;
-          cursor: pointer;
-          outline: none;
-          border: none;
-          position: absolute;
-          left: 82.5%;
-          top: 45%;
-
-          // Make the button responsive
-          @include sm {
-            position: static; // Change position to static for smaller devices
-            margin-top: 20px; // Add spacing when stacked
-          }
-        }
       }
     }
   }
@@ -141,6 +226,7 @@
     background-color: #fcf5f3;
     height: 100%;
     overflow-y: scroll;
+    margin-left: 20px;
 
     @include md {
       flex: none;
@@ -167,6 +253,7 @@
         font-weight: bold;
         font-size: 18px;
         margin-bottom: 10px;
+        line-height: 1.4; // Line height for readability
       }
 
       .feature {
@@ -184,6 +271,7 @@
           }
           p {
             font-size: 14px;
+            line-height: 1.5; // Improved readability
           }
         }
       }
@@ -195,6 +283,7 @@
         padding: 20px 10px;
         background-color: white;
         border-radius: 10px;
+        justify-content: center;
       }
 
       .listHorizontal {
@@ -203,14 +292,25 @@
         padding: 20px 10px;
         background-color: white;
         border-radius: 10px;
+        gap: 20px;
+
+        @include lg {
+          flex-direction: column;
+        }
       }
 
       .sizes {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        gap: 20px;
 
         @include lg {
           font-size: 12px;
+        }
+
+        @include sm {
+          font-size: 12px;
+          flex-direction: column;
         }
 
         .size {
@@ -226,26 +326,9 @@
       .mapContainer {
         width: 100%;
         height: 200px;
-      }
 
-      .buttons {
-        display: flex;
-        justify-content: space-between;
-
-        button {
-          padding: 20px;
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          background-color: white;
-          border: 1px solid #fece51;
-          border-radius: 5px;
-          cursor: pointer;
-
-          img {
-            width: 16px;
-            height: 16px;
-          }
+        @include lg {
+          height: 300px; // Increased map height for larger screens
         }
       }
     }
