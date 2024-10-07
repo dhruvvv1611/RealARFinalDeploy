@@ -3,18 +3,18 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import apiRequest from "../../lib/apiRequest";
 import ModelViewer from "../../components/viewModel/ModelViewer";
-import { QRCodeCanvas } from "qrcode.react";
+
 
 const ModelsPage = () => {
   const { id } = useParams();
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
-  const localIpUrl = "http://192.168.0.203:8800";
+  
 
   useEffect(() => {
     const fetchModels = async () => {
       try {
-        const response = await apiRequest.get(`/models/${id}/models`); // Update the endpoint here
+        const response = await apiRequest.get(`/models/${id}/models`);
         setModels(response.data.models);
       } catch (error) {
         console.error("Error fetching models:", error);
@@ -40,6 +40,7 @@ const ModelsPage = () => {
           ) : (
             models.map((model, index) => (
               <div key={index} className="modelWrapper">
+                {/* 3D Model Viewer */}
                 <ModelViewer modelUrl={model} />
                 <p>Model {index + 1}</p>
               </div>
@@ -47,13 +48,6 @@ const ModelsPage = () => {
           )}
         </div>
       </div>
-      <div>
-      <div className="qrCodeContainer" style={{ textAlign: "center" }}>
-        <QRCodeCanvas value={localIpUrl} size={128} />
-        <p>Scan the QR code to view in AR</p>
-      </div>
-      </div>
-     
     </>
   );
 };

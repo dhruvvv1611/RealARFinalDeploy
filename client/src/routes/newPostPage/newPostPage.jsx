@@ -8,8 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 function NewPostPage() {
   const [value, setValue] = useState("");
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState([]); // State for regular images
   const [models, setModels] = useState([]); // State for .glb models
+  const [panoramicImages, setPanoramicImages] = useState([]); // State for panoramic images
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ function NewPostPage() {
           longitude: inputs.longitude,
           images: images, // Include uploaded images
           models: models, // Include uploaded models
+          panoramic: panoramicImages, // Include uploaded panoramic images
         },
         postDetail: {
           desc: value,
@@ -177,15 +179,24 @@ function NewPostPage() {
           </form>
         </div>
       </div>
+
       <div className="sideContainer">
+        {/* Display Uploaded Images */}
         {images.map((image, index) => (
           <img src={image} key={index} alt="" />
         ))}
+
+        {/* Display Uploaded Models */}
         {models.map((model, index) => (
           <p key={index}>{model}</p> // Display the model URLs or names
         ))}
 
-        {/* Upload Button for Images */}
+        {/* Display Uploaded Panoramic Images */}
+        {panoramicImages.map((panoramic, index) => (
+          <img src={panoramic} key={index} alt={`Panoramic ${index}`} />
+        ))}
+
+        {/* Upload Button for Regular Images */}
         <UploadWidget
           uwConfig={{
             multiple: true,
@@ -209,6 +220,19 @@ function NewPostPage() {
           }}
           setState={setModels} // Update models state
           buttonLabel="Upload Models (.glb)" // Label for model upload button
+        />
+
+        {/* Upload Button for Panoramic Images */}
+        <UploadWidget
+          uwConfig={{
+            multiple: true,
+            cloudName: "dsfhv73xf",
+            uploadPreset: "estate",
+            folder: "panoramic", // Folder for panoramic images
+            resourceType: "image", // Specify for panoramic images
+          }}
+          setState={setPanoramicImages} // Update panoramic images state
+          buttonLabel="Upload Panoramic Images" // Label for panoramic image upload button
         />
       </div>
     </div>

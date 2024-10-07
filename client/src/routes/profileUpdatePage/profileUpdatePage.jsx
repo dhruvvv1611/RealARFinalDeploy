@@ -9,7 +9,6 @@ function ProfileUpdatePage() {
   const { currentUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState("");
   const [avatar, setAvatar] = useState([]);
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,13 +22,13 @@ function ProfileUpdatePage() {
         username,
         email,
         password,
-        avatar:avatar[0]
+        avatar: avatar[0], // Avatar from UploadWidget
       });
       updateUser(res.data);
       navigate("/profile");
     } catch (err) {
-      console.log(err);
-      setError(err.response.data.message);
+      console.error(err);
+      setError(err.response?.data?.message || "An error occurred");
     }
   };
 
@@ -45,6 +44,7 @@ function ProfileUpdatePage() {
               name="username"
               type="text"
               defaultValue={currentUser.username}
+              required
             />
           </div>
           <div className="item">
@@ -54,27 +54,35 @@ function ProfileUpdatePage() {
               name="email"
               type="email"
               defaultValue={currentUser.email}
+              required
             />
           </div>
           <div className="item">
             <label htmlFor="password">Password</label>
             <input id="password" name="password" type="password" />
           </div>
-          <button>Update</button>
-          {error && <span>error</span>}
+          <button type="submit">
+            Update
+          </button>
+          {error && <span className="error">{error}</span>}
         </form>
       </div>
       <div className="sideContainer">
-        <img src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} alt="" className="avatar" />
+        <img
+          src={avatar[0] || currentUser.avatar || "/noavatar.jpg"}
+          alt="Avatar"
+          className="avatar"
+        />
         <UploadWidget
           uwConfig={{
-            cloudName: "lamadev",
+            cloudName: "dsfhv73xf",
             uploadPreset: "estate",
             multiple: false,
             maxImageFileSize: 2000000,
             folder: "avatars",
           }}
           setState={setAvatar}
+          buttonLabel="Upload Avatar"
         />
       </div>
     </div>

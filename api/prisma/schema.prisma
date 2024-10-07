@@ -19,6 +19,7 @@ model Post {
   price      Int
   images     String[]
   models     String[]
+  panoramic  String[]
   address    String
   city       String
   bedroom    Int
@@ -64,12 +65,13 @@ model SavedPost {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   user      User     @relation(fields: [userId], references: [id])
   post      Post     @relation(fields: [postId], references: [id])
-  userId    String   @unique @db.ObjectId
-  postId    String   @unique @db.ObjectId
+  userId    String   @db.ObjectId  // Remove the @unique annotation here
+  postId    String   @db.ObjectId
   createdAt DateTime @default(now())
 
-  @@unique([userId, postId])
+  @@unique([userId, postId]) // Keep this for the combination of userId and postId
 }
+
 
 model User {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId

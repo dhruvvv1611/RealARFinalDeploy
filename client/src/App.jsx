@@ -9,6 +9,7 @@ import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
 import ModelsPage from "./routes/ModelsPage/ModelsPage";
+import PanoramicPage from "./routes/PanoramicPage/PanoramicPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
 
 function App() {
@@ -34,6 +35,10 @@ function App() {
         {
           path: "/models/:id", // Add new route for ModelsPage
           element: <ModelsPage />,
+        },
+        {
+          path: "/panoramic/:id", // Add new route for ModelsPage
+          element: <PanoramicPage />,
         },
         {
           path: "/login",

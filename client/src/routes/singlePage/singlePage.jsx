@@ -31,6 +31,9 @@ function SinglePage() {
     navigate(`/models/${post.id}`); // Adjust the path based on your routing
   };
 
+  const handleNavigateToPanoramic = () => {
+    navigate(`/panoramic/${post.id}`); // Adjust the path based on your routing
+  };
   return (
     <div className="singlePage">
       <div className="details">
@@ -40,12 +43,21 @@ function SinglePage() {
             <div className="top">
               <div className="post">
                 <h1 style={{ display: "inline-block" }}>{post.title}</h1>
-                <button
-                  onClick={handleNavigateToModels}
-                  style={{ marginLeft: "10px" }} // Add margin to separate from title
-                >
-                  View 3D Models
-                </button>
+                <div style={{display:"flex "}}>
+                  <button
+                    onClick={handleNavigateToModels}
+                    style={{ marginLeft: "10px" }} // Add margin to separate from title
+                  >
+                    View 3D Models
+                  </button>
+                  <button
+                    onClick={handleNavigateToPanoramic}
+                    style={{ marginLeft: "10px" }} // Add margin to separate from title
+                  >
+                    View 3D Images
+                  </button>
+                </div>
+
                 <div className="address">
                   <img src="/pin.png" alt="" />
                   <span>{post.address}</span>

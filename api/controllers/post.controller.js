@@ -80,17 +80,15 @@ export const addPost = async (req, res) => {
   // Validate postData
   const { postData, postDetail } = body;
 
-  // Check if postData includes images and models
+  // Check if postData includes images, models, and panoramic images
   if (
     !postData.images ||
     !Array.isArray(postData.images) ||
     !postData.images.every((img) => typeof img === "string")
   ) {
-    return res
-      .status(400)
-      .json({
-        message: "Invalid images format. Expected an array of strings.",
-      });
+    return res.status(400).json({
+      message: "Invalid images format. Expected an array of strings.",
+    });
   }
 
   if (
@@ -98,14 +96,24 @@ export const addPost = async (req, res) => {
     !Array.isArray(postData.models) ||
     !postData.models.every((model) => typeof model === "string")
   ) {
-    return res
-      .status(400)
-      .json({
-        message: "Invalid models format. Expected an array of strings.",
-      });
+    return res.status(400).json({
+      message: "Invalid models format. Expected an array of strings.",
+    });
+  }
+
+  // Validate panoramic images
+  if (
+    !postData.panoramic ||
+    !Array.isArray(postData.panoramic) ||
+    !postData.panoramic.every((panoramic) => typeof panoramic === "string")
+  ) {
+    return res.status(400).json({
+      message: "Invalid panoramic images format. Expected an array of strings.",
+    });
   }
 
   try {
+    // Create a new post with related post detail
     const newPost = await prisma.post.create({
       data: {
         ...postData,
@@ -115,12 +123,15 @@ export const addPost = async (req, res) => {
         },
       },
     });
+
+    // Send successful response with the newly created post
     res.status(200).json(newPost);
   } catch (err) {
-    console.log(err);
+    console.error("Error creating post:", err);
     res.status(500).json({ message: "Failed to create post" });
   }
 };
+
 
 export const updatePost = async (req, res) => {
   try {
