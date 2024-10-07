@@ -167,3 +167,27 @@ export const deletePost = async (req, res) => {
 };
 
 
+
+
+
+export const getCoordinates = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const model = await prisma.model.findUnique({
+      where: { id: Number(id) }, // Ensure you're matching the correct type
+      select: {
+        latitude: true,
+        longitude: true,
+      },
+    });
+
+    if (!model) {
+      return res.status(404).json({ message: "Model not found" });
+    }
+
+    return res.status(200).json(model);
+  } catch (error) {
+    console.error("Error fetching model coordinates:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};

@@ -34,6 +34,14 @@ function SinglePage() {
   const handleNavigateToPanoramic = () => {
     navigate(`/panoramic/${post.id}`); // Adjust the path based on your routing
   };
+
+  // Function to open Google Street View
+  const handleOpenStreetView = () => {
+    const { latitude, longitude } = post; // Ensure you have latitude and longitude in the post data
+    const streetViewUrl = `https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${latitude},${longitude}`;
+    window.open(streetViewUrl, "_blank"); // Open in a new tab
+  };
+
   return (
     <div className="singlePage">
       <div className="details">
@@ -55,6 +63,12 @@ function SinglePage() {
                     style={{ marginLeft: "10px" }} // Add margin to separate from title
                   >
                     View 3D Images
+                  </button>
+                  <button
+                    onClick={handleOpenStreetView}
+                    style={{ marginLeft: "10px" }} // Add margin to separate from title
+                  >
+                    Open Google Street View
                   </button>
                 </div>
 
