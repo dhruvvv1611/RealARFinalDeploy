@@ -12,11 +12,8 @@ function HomePage() {
       <div className="textContainer">
         <div className="wrapper">
           <h1 className="title">Find Real Estate & Get Your Dream Place</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
-            explicabo suscipit cum eius, iure est nulla animi consequatur
-            facilis id pariatur fugit quos laudantium temporibus dolor ea
-            repellat provident impedit!
+          <p className="des">
+          Our AR-driven real estate platform transforms property exploration with immersive 3D tours and interactive features. Seamlessly visualize spaces, customize interiors, and access local insights—all in one dynamic, intuitive experience that redefines how you discover and engage with real estate!
           </p>
           <SearchBar />
           <div className="boxes">

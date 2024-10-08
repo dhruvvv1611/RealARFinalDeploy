@@ -1,17 +1,26 @@
 import "./singlePage.scss";
 import Slider from "../../components/slider/Slider";
 import Map from "../../components/map/Map";
-import { useNavigate, useLoaderData } from "react-router-dom";
+import { useNavigate, useLoaderData, Link } from "react-router-dom";
 import DOMPurify from "dompurify";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
 
 function SinglePage() {
   const post = useLoaderData();
-  const [saved, setSaved] = useState(post.isSaved);
+  const [saved, setSaved] = useState(post?.isSaved || false);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [chat, setChat] = useState(null);
+  const [activeChatId, setActiveChatId] = useState(null);
+
+  useEffect(() => {
+    if (!post) {
+      navigate("/"); // Redirect to the homepage
+    }
+  }, [post, navigate]);
+
 
   const handleSave = async () => {
     if (!currentUser) {
@@ -23,6 +32,53 @@ function SinglePage() {
     } catch (err) {
       console.log(err);
       setSaved((prev) => !prev);
+    }
+  };
+
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+    if (confirmed) {
+      try {
+        await apiRequest.delete(`/posts/${post.id}`);
+        alert("Post deleted successfully.");
+        navigate("/profile"); // Navigate to the user's profile after deletion
+      } catch (err) {
+        console.log(err);
+        alert("Failed to delete the post. Please try again.");
+      }
+    }
+  };
+
+  const handleChat = async () => {
+    if (!currentUser) {
+      // Redirect to login if user is not logged in
+      alert("Please log in to start a chat."); 
+      return;
+    }
+  
+    try {
+      const chatResponse = await apiRequest.get(`/chats?userId=${post.userId}`);
+      
+      if (chatResponse.data.length > 0) {
+        // If chat exists, set the chat state to the existing chat
+        setChat(chatResponse.data[0]); // Assuming setChat is the state setter for your chat
+        setActiveChatId(chatResponse.data[0].id); // Set the active chat ID
+      } else {
+        // If no chat exists, create a new one
+        const newChatResponse = await apiRequest.post("/chats", {
+          receiverId: post.userId, // Ensure you're passing the correct receiver ID
+        });
+  
+        // Set the newly created chat in the state
+        setChat(newChatResponse.data); // Assuming newChatResponse.data contains the newly created chat
+        setActiveChatId(newChatResponse.data.id); // Set the active chat ID
+        navigate("/profile");
+      }
+    } catch (err) {
+      console.error("Error handling chat:", err);
+      alert("Failed to open or create a chat. Please try again.");
     }
   };
 
@@ -76,7 +132,7 @@ function SinglePage() {
                   <img src="/pin.png" alt="" />
                   <span>{post.address}</span>
                 </div>
-                <div className="price">$ {post.price}</div>
+                <div className="price">₹ {post.price}</div>
               </div>
               <div className="user">
                 <span>Listed By</span>
@@ -178,21 +234,41 @@ function SinglePage() {
           <div className="mapContainer">
             <Map items={[post]} />
           </div>
-          <div className="bottomButton">
-            <div className="button">
-              <button className="chatButton ">
-                <img src="/chat.png" alt="" />
-                <p>Send a Message</p>
-              </button>
-              <button onClick={handleSave} className="saveButton ">
-                <img src="/save.png" alt="" />
-                <p>{saved ? "Place Saved" : "Save the Place"}</p>
-              </button>
-            </div>
+          <div className="buttons">
+            {currentUser?.id !== post.userId && (
+              <>
+                <button onClick={handleChat} className="sendMessage">
+                  <img src="/chat.png" alt="Chat Icon" />
+                  Send a Message
+                </button>
+
+                <button
+                  onClick={handleSave}
+                  className={`savebutton ${saved ? "saved" : ""}`} // Use conditional class
+                >
+                  <img src="/save.png" alt="Save Icon" />
+                  {saved ? "Place Saved" : "Save the Place"}
+                </button>
+              </>
+            )}
+            {currentUser?.id === post.userId && ( // Show update and delete buttons only if the current user is the owner of the post
+              <>
+                <Link to={`/update/${post.id}`}>
+                  <button className="updateButton">
+                    <img src="/update.png" alt="" />
+                    Update Post
+                  </button>
+                </Link>
+                <button onClick={handleDelete} className="deleteButton">
+                  <img src="/delete.png" alt="" />
+                  Delete Post
+                </button>
+              </>
+            )}
+          </div>
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

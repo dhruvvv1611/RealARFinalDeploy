@@ -7,6 +7,11 @@
   .textContainer {
     flex: 3;
 
+    .des{
+      font-size: 20px;
+    }
+
+
     .wrapper {
       padding-right: 100px;
       display: flex;
@@ -35,6 +40,8 @@
         }
       }
 
+      
+
       .boxes {
         display: flex;
         justify-content: space-between;
@@ -42,6 +49,8 @@
         @include sm {
           display: none;
         }
+
+        
 
         h1 {
           font-size: 36px;
