@@ -4,108 +4,115 @@
   display: flex;
   height: 100%;
 
-  .bottomButton {
+  .buttonsGroup {
     display: flex;
-    margin-top: 10px;
-   
-
-    .button {
-      padding: 10px;
-      margin-left: 10px;
+    flex-direction: column; // Stack buttons vertically by default (for mobile)
+    gap: 8px; // Reduced space between buttons
+    margin-top: 10px; // Space above buttons
+  
+    @media (min-width: 768px) {
+      flex-direction: row; // Change to row on larger screens
+      justify-content: space-between; // Space between buttons on larger screens
+    }
+  
+    button {
+      padding: 8px 12px; // Reduced padding for smaller buttons
       border: none;
       cursor: pointer;
       border-radius: 5px;
-      transition: background-color 0.3s ease;
-     
-    }
-
-    .button{
-      display: flex;
-      gap: 70px;
-      margin-left: 15px;
-
-
-      @include sm{
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-left: 70px;
-
-      }
-   
-    }
-
+      transition: background-color 0.3s ease, transform 0.2s ease; // Transition effects
+      width: 100%; // Full width on mobile
+      font-size: 0.9rem; // Smaller font size for compactness
   
-    .chatButton{
-      background-color: #ffe6e6;
-      color: #cc0000;
-      display: flex;
-      gap: 10px;
-      
-      
-
+      // Set a max-width for buttons on larger screens
+      @media (min-width: 768px) {
+        width: auto; // Allow buttons to size based on content
+      }
+    }
+  
+    .viewModelsBtn {
+      background-color: #f0f0f0; // Light grey
+      color: #333; // Dark text
+  
       &:hover {
-        background-color: #e0e0e0;
+        background-color: #e0e0e0; // Darker grey on hover
+      }
+    }
+  
+    .viewPanoramicBtn {
+      background-color: #dff0ff; // Light blue
+      color: #0056b3; // Dark blue text
+  
+      &:hover {
+        background-color: #cce0ff; // Darker blue on hover
+      }
+    }
+
+    .sendMessage{
+      background-color: #dff0ff; // Light blue
+      color: #0056b3; // Dark blue text
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+  
+      &:hover {
+        background-color: #cce0ff; // Darker blue on hover
       }
     }
 
     .saveButton{
-      background-color: #dff0ff;
-      color: #0056b3;
+      background-color: #dff0ff; // Light blue
+      color: #0056b3; // Dark blue text
       display: flex;
+      justify-content: center;
+      align-items: center;
       gap: 10px;
-     
-
+  
       &:hover {
-        background-color: #cce0ff;
-      }
-      
-     
-    }
-  }
-
-
-  .buttonsGroup {
-    display: flex;
-    margin-top: 10px;
-
-    button {
-      padding: 10px;
-      margin-left: 10px;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s ease;
-    }
-
-    .viewModelsBtn {
-      background-color: #f0f0f0;
-      color: #333;
-
-      &:hover {
-        background-color: #e0e0e0;
+        background-color: #cce0ff; // Darker blue on hover
       }
     }
 
-    .viewPanoramicBtn {
-      background-color: #dff0ff;
-      color: #0056b3;
-
+    .updateButton{
+      background-color: #e2f8e0; // Light green
+      color: #3d8f3d; // Dark green text
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+  
       &:hover {
-        background-color: #cce0ff;
+        background-color: #c6e7c6; // Darker green on hover
       }
     }
 
+    .deleteButton{
+      background-color: #f8d7da; // Light red
+      color: #721c24; // Dark red text
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+  
+      &:hover {
+        background-color: #f5c6cb; // Darker red on hover
+      }
+    }
+
+
+  
     .openStreetViewBtn {
-      background-color: #ffe6e6;
-      color: #cc0000;
-
+      background-color: #ffe6e6; // Light red
+      color: #cc0000; // Dark red text
+  
       &:hover {
-        background-color: #ffcccc;
+        background-color: #ffcccc; // Darker red on hover
       }
     }
   }
-
+  
+  
   @include md {
     flex-direction: column;
     overflow: scroll;

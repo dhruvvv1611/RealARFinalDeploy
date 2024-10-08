@@ -6,6 +6,7 @@ import DOMPurify from "dompurify";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import apiRequest from "../../lib/apiRequest";
+import { CircleXIcon, DeleteIcon, Edit } from "lucide-react";
 
 function SinglePage() {
   const post = useLoaderData();
@@ -20,7 +21,6 @@ function SinglePage() {
       navigate("/"); // Redirect to the homepage
     }
   }, [post, navigate]);
-
 
   const handleSave = async () => {
     if (!currentUser) {
@@ -54,13 +54,13 @@ function SinglePage() {
   const handleChat = async () => {
     if (!currentUser) {
       // Redirect to login if user is not logged in
-      alert("Please log in to start a chat."); 
+      alert("Please log in to start a chat.");
       return;
     }
-  
+
     try {
       const chatResponse = await apiRequest.get(`/chats?userId=${post.userId}`);
-      
+
       if (chatResponse.data.length > 0) {
         // If chat exists, set the chat state to the existing chat
         setChat(chatResponse.data[0]); // Assuming setChat is the state setter for your chat
@@ -70,7 +70,7 @@ function SinglePage() {
         const newChatResponse = await apiRequest.post("/chats", {
           receiverId: post.userId, // Ensure you're passing the correct receiver ID
         });
-  
+
         // Set the newly created chat in the state
         setChat(newChatResponse.data); // Assuming newChatResponse.data contains the newly created chat
         setActiveChatId(newChatResponse.data.id); // Set the active chat ID
@@ -234,8 +234,8 @@ function SinglePage() {
           <div className="mapContainer">
             <Map items={[post]} />
           </div>
-          <div className="buttons">
-            {currentUser?.id !== post.userId && (
+          <div className="buttonsGroup">
+            {currentUser?.id !== post.userId ? (
               <>
                 <button onClick={handleChat} className="sendMessage">
                   <img src="/chat.png" alt="Chat Icon" />
@@ -244,31 +244,30 @@ function SinglePage() {
 
                 <button
                   onClick={handleSave}
-                  className={`savebutton ${saved ? "saved" : ""}`} // Use conditional class
+                  className={`saveButton ${saved ? "saved" : ""}`}
                 >
                   <img src="/save.png" alt="Save Icon" />
                   {saved ? "Place Saved" : "Save the Place"}
                 </button>
               </>
-            )}
-            {currentUser?.id === post.userId && ( // Show update and delete buttons only if the current user is the owner of the post
+            ) : (
               <>
                 <Link to={`/update/${post.id}`}>
                   <button className="updateButton">
-                    <img src="/update.png" alt="" />
+                    <Edit />
                     Update Post
                   </button>
                 </Link>
                 <button onClick={handleDelete} className="deleteButton">
-                  <img src="/delete.png" alt="" />
+                  <CircleXIcon />
                   Delete Post
                 </button>
               </>
             )}
           </div>
-          </div>
         </div>
       </div>
+    </div>
   );
 }
 
