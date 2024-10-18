@@ -1,22 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 import apiRequest from "../../lib/apiRequest";
 import PanoramaViewer from "../../components/viewPanoramic/PanoramaViewer";
-import "./panoramicPage.scss"; // Add this line to include your styling
+import "./panoramicPage.scss";
 
 const PanoramicPage = () => {
   const { id } = useParams();
   const [panoramics, setPanoramics] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchPanoramics = async () => {
       try {
-        const response = await apiRequest.get(`/panoramic/${id}/images`); // Adjust endpoint as needed
-        setPanoramics(response.data.panoramics); // Adjust according to your API response
+        const response = await apiRequest.get(`/panoramic/${id}/images`);
+        setPanoramics(response.data.panoramics);
       } catch (error) {
         console.error("Error fetching panoramics:", error);
+        setError("Failed to load panoramic images. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -26,7 +27,11 @@ const PanoramicPage = () => {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading...</div>; // You can replace this with a spinner as mentioned
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
@@ -38,9 +43,7 @@ const PanoramicPage = () => {
         ) : (
           panoramics.map((panoramic, index) => (
             <div key={index} className="panoramicWrapper">
-              {/* Directly show the PanoramaViewer without needing a click */}
               <PanoramaViewer panoramicUrl={panoramic} />
-              <p>Panoramic View {index + 1}</p>
             </div>
           ))
         )}

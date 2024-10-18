@@ -36,20 +36,33 @@ function SinglePage() {
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this post?"
-    );
+    const confirmed = window.confirm("Are you sure you want to delete this post?");
     if (confirmed) {
       try {
         await apiRequest.delete(`/posts/${post.id}`);
         alert("Post deleted successfully.");
-        navigate("/profile"); // Navigate to the user's profile after deletion
+        navigate("/profile");
       } catch (err) {
-        console.log(err);
-        alert("Failed to delete the post. Please try again.");
+        console.error("Delete failed with error:", err);
+  
+        // Handle specific error status codes
+        if (err.response) {
+          console.log("Response data:", err.response.data);
+          console.log("Response status:", err.response.status);
+        }
+  
+        // Show user-friendly error messages
+        if (err.response?.status === 403) {
+          alert("You are not authorized to delete this post.");
+        } else if (err.response?.status === 404) {
+          alert("Post not found. It may have already been deleted.");
+        } else {
+          alert("Failed to delete the post. Please try again.");
+        }
       }
     }
   };
+  
 
   const handleChat = async () => {
     if (!currentUser) {

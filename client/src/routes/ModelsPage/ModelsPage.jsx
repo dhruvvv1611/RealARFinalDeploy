@@ -42,7 +42,6 @@ const ModelsPage = () => {
               <div key={index} className="modelWrapper">
                 {/* 3D Model Viewer */}
                 <ModelViewer modelUrl={model} />
-                <p>Model {index + 1}</p>
               </div>
             ))
           )}

@@ -8,6 +8,7 @@ import Login from "./routes/login/login";
 import Register from "./routes/register/register";
 import ProfileUpdatePage from "./routes/profileUpdatePage/profileUpdatePage";
 import NewPostPage from "./routes/newPostPage/newPostPage";
+import UpdatePostPage from "./routes/updatePost/updatePost";
 import ModelsPage from "./routes/ModelsPage/ModelsPage";
 import PanoramicPage from "./routes/PanoramicPage/PanoramicPage";
 import { listPageLoader, profilePageLoader, singlePageLoader } from "./lib/loaders";
@@ -37,7 +38,7 @@ function App() {
           element: <ModelsPage />,
         },
         {
-          path: "/panoramic/:id", // Add new route for ModelsPage
+          path: "/panoramic/:id", // Add new route for PanoramicPage
           element: <PanoramicPage />,
         },
         {
@@ -66,6 +67,10 @@ function App() {
         {
           path: "/add",
           element: <NewPostPage />,
+        },
+        {
+          path: "/update/:id", // New route for updating posts
+          element: <UpdatePostPage />, // Render the UpdatePostPage
         },
       ],
     },
