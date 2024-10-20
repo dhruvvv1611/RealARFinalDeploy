@@ -18,7 +18,7 @@ function HomePage() {
           <SearchBar />
           <div className="boxes">
             <div className="box">
-              <h1><a target="_blank" href="https://www.reddit.com/r/OnePiece/comments/1bhrvek/the_nothing_happened_moment_was_so_much_more/">16+</a></h1>
+              <h1><a target="_blank" href="https://youtu.be/Tn7f-QMs8OQ?si=i5MqcaLDEbG8e1Nt">16+</a></h1>
               <h2>Years of Experience</h2>
             </div>
             <div className="box">
