@@ -12,6 +12,7 @@ import messageRoute from "./routes/message.route.js";
 import modelsRoute from "./routes/model.route.js";
 import panoramicRoute from "./routes/panorama.route.js";
 import { getGeminiResponse } from "./gemini.js";
+import path from "path";
 
 const app = express();
 const server = http.createServer(app); // Create HTTP server
@@ -20,6 +21,8 @@ const io = new Server(server, {
     origin: "http://localhost:5173",
   },
 });
+
+const _dirname = path.resolve();
 
 // Middleware setup
 app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
@@ -83,6 +86,11 @@ io.on("connection", (socket) => {
     removeUser(socket.id);
     console.log("User disconnected:", socket.id);
   });
+});
+
+app.use(express.static(path.join(_dirname, "/client/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(_dirname, "client", "dist", "index.html"));
 });
 
 // Start the server
